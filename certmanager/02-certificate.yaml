@@ -1,0 +1,19 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: krieg
+  namespace: cert-manager
+spec:
+  secretName: krieg-tls-secret
+  commonName: ${DOMAIN}
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  dnsNames:
+  - ${DOMAIN}
+  - "*.${DOMAIN}"
+  secretTemplate:
+    annotations:
+      replicator.v1.mittwald.de/replication-allowed: "true"
+      replicator.v1.mittwald.de/replication-allowed-namespaces: "*"
+      replicator.v1.mittwald.de/replicate-to: "*"
