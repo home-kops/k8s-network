@@ -9,6 +9,9 @@ spec:
     matchLabels:
       app: adguard
   template:
+    metadata:
+      labels:
+        app: adguard
     spec:
       containers:
       - name: adguard
