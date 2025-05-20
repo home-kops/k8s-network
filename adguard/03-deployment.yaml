@@ -15,7 +15,8 @@ spec:
     spec:
       containers:
       - name: adguard
-        image: adguard/adguardhome:v0.108.0-b.69
+        image: adguard/adguardhome:latest
+        imagePullPolicy: IfNotPresent
         env:
         - name: AGH_CONFIG
           valueFrom:
