@@ -11,5 +11,5 @@ spec:
     kind: Rule
     services:
     - kind: Service
-      name: adguard-service
+      name: adguard-http-service
       port: http
