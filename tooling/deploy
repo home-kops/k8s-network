@@ -24,6 +24,14 @@ helm repo add jetstack https://charts.jetstack.io && \
 
 project_path="$(git rev-parse --show-toplevel)"
 
+# common
+echo -e "\nDeploying common..."
+common_dir="${project_path}/common"
+
+kubectl apply -f "${common_dir}"/00-namespace.yaml
+
+echo -e "Done!\n"
+
 # replicator
 echo -e "\nDeploying replicator..."
 
@@ -69,4 +77,14 @@ envsubst <"${certmanager_dir}"/01-issuer.yaml | sponge "${certmanager_dir}"/01-i
 envsubst <"${certmanager_dir}"/02-certificate.yaml | sponge "${certmanager_dir}"/02-certificate.yaml
 
 kubectl apply -f "${certmanager_dir}" --dry-run="${dry_run_mode}"
+echo -e "Done!\n"
+
+# adguard
+echo -e "\nDeploying adguard..."
+adguard_dir="${project_path}/adguard"
+
+# Replace env variables
+envsubst <"${adguard_dir}"/05-ingress-route.yaml | sponge "${adguard_dir}"/05-ingress-route.yaml
+
+kubectl apply -f "${adguard_dir}" --dry-run="${dry_run_mode}"
 echo -e "Done!\n"
