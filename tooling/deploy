@@ -80,9 +80,9 @@ kubectl apply -f "${certmanager_dir}" --dry-run="${dry_run_mode}"
 echo -e "Done!\n"
 
 # metallb
-kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.13.10/config/manifests/metallb-native.yaml --dry-run="${dry_run_mode}"
+#kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.13.10/config/manifests/metallb-native.yaml --dry-run="${dry_run_mode}"
 
-kubectl apply -f "${project_path}/metallb" --dry-run="${dry_run_mode}"
+#kubectl apply -f "${project_path}/metallb" --dry-run="${dry_run_mode}"
 
 # adguard
 echo -e "\nDeploying adguard..."
@@ -91,5 +91,5 @@ adguard_dir="${project_path}/adguard"
 # Replace env variables
 envsubst <"${adguard_dir}"/05-ingress-route.yaml | sponge "${adguard_dir}"/05-ingress-route.yaml
 
-kubectl apply -f "${adguard_dir}" --dry-run="${dry_run_mode}"
+#kubectl apply -f "${adguard_dir}" --dry-run="${dry_run_mode}"
 echo -e "Done!\n"
