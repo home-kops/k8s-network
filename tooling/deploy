@@ -18,7 +18,8 @@ while getopts "d" flag; do
 done
 
 # Add helm repositories
-helm repo add jetstack https://charts.jetstack.io && \
+helm repo add traefik https://traefik.github.io/charts && \
+    helm repo add jetstack https://charts.jetstack.io && \
     helm repo add mittwald https://helm.mittwald.de && \
     helm repo update
 
@@ -50,6 +51,12 @@ traefik_dir="${project_path}/traefik"
 # Replace env variables
 envsubst <"${traefik_dir}"/02-ingress-route.yaml | sponge "${traefik_dir}"/02-ingress-route.yaml
 
+if [[ "${dry_run_mode}" == "server" ]]; then
+    helm upgrade --install traefik traefik/traefik --namespace network --set crds.enabled=true --dry-run="server"
+else
+    helm upgrade --install traefik traefik/traefik --namespace network --set crds.enabled=true
+fi
+
 kubectl apply -f "${traefik_dir}" --dry-run="${dry_run_mode}"
 echo -e "Done!\n"
 
@@ -58,18 +65,9 @@ echo -e "\nDeploying cert-manager..."
 certmanager_dir="${project_path}/certmanager"
 
 if [[ "${dry_run_mode}" == "server" ]]; then
-    helm upgrade --install \
-        cert-manager jetstack/cert-manager \
-        --namespace cert-manager \
-        --create-namespace \
-        --set crds.enabled=true \
-        --dry-run="server"   
+    helm upgrade --install cert-manager jetstack/cert-manager --namespace network --set crds.enabled=true --dry-run="server"
 else
-    helm upgrade --install \
-        cert-manager jetstack/cert-manager \
-        --namespace cert-manager \
-        --create-namespace \
-        --set crds.enabled=true
+    helm upgrade --install cert-manager jetstack/cert-manager --namespace network --set crds.enabled=true
 fi
 
 # Replace env variables
