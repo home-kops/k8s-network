@@ -21,6 +21,7 @@ done
 helm repo add traefik https://traefik.github.io/charts && \
     helm repo add jetstack https://charts.jetstack.io && \
     helm repo add mittwald https://helm.mittwald.de && \
+    helm repo add metallb https://metallb.github.io/metallb && \
     helm repo update
 
 project_path="$(git rev-parse --show-toplevel)"
@@ -35,11 +36,12 @@ echo -e "Done!\n"
 
 # replicator
 echo -e "\nDeploying replicator..."
+replicator_dir="${project_path}/replicator"
 
 if [[ "${dry_run_mode}" == "server" ]]; then
-    helm upgrade --install --namespace default kubernetes-replicator mittwald/kubernetes-replicator --dry-run="server"
+    helm upgrade --install --namespace default kubernetes-replicator mittwald/kubernetes-replicator --values "${replicator_dir}"/helm/values.yaml --dry-run="server"
 else
-    helm upgrade --install --namespace default kubernetes-replicator mittwald/kubernetes-replicator
+    helm upgrade --install --namespace default kubernetes-replicator mittwald/kubernetes-replicator --values "${replicator_dir}"/helm/values.yaml
 fi
 
 echo -e "Done!\n"
@@ -49,12 +51,12 @@ echo -e "\nDeploying traefik..."
 traefik_dir="${project_path}/traefik"
 
 # Replace env variables
-envsubst <"${traefik_dir}"/02-ingress-route.yaml | sponge "${traefik_dir}"/02-ingress-route.yaml
+envsubst <"${traefik_dir}"/01-ingress-route.yaml | sponge "${traefik_dir}"/01-ingress-route.yaml
 
 if [[ "${dry_run_mode}" == "server" ]]; then
-    helm upgrade --install traefik traefik/traefik --namespace network --set crds.enabled=true --dry-run="server"
+    helm upgrade --install traefik traefik/traefik --namespace network --set crds.enabled=true --values "${traefik_dir}"/helm/values.yaml --dry-run="server"
 else
-    helm upgrade --install traefik traefik/traefik --namespace network --set crds.enabled=true
+    helm upgrade --install traefik traefik/traefik --namespace network --set crds.enabled=true --values "${traefik_dir}"/helm/values.yaml
 fi
 
 kubectl apply -f "${traefik_dir}" --dry-run="${dry_run_mode}"
@@ -65,9 +67,9 @@ echo -e "\nDeploying cert-manager..."
 certmanager_dir="${project_path}/certmanager"
 
 if [[ "${dry_run_mode}" == "server" ]]; then
-    helm upgrade --install cert-manager jetstack/cert-manager --namespace network --set crds.enabled=true --dry-run="server"
+    helm upgrade --install cert-manager jetstack/cert-manager --namespace network --set crds.enabled=true --values "${certmanager_dir}"/helm/values.yaml --dry-run="server"
 else
-    helm upgrade --install cert-manager jetstack/cert-manager --namespace network --set crds.enabled=true
+    helm upgrade --install cert-manager jetstack/cert-manager --namespace network --set crds.enabled=true --values "${certmanager_dir}"/helm/values.yaml
 fi
 
 # Replace env variables
@@ -78,16 +80,14 @@ kubectl apply -f "${certmanager_dir}" --dry-run="${dry_run_mode}"
 echo -e "Done!\n"
 
 # metallb
-#kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.13.10/config/manifests/metallb-native.yaml --dry-run="${dry_run_mode}"
+echo -e "\nDeploying metallb..."
+metallb_dir="${project_path}/metallb"
 
-#kubectl apply -f "${project_path}/metallb" --dry-run="${dry_run_mode}"
+if [[ "${dry_run_mode}" == "server" ]]; then
+    helm upgrade --install metallb metallb/metallb --namespace network --values "${metallb_dir}"/helm/values.yaml --dry-run="server"
+else
+    helm upgrade --install metallb metallb/metallb --namespace network --values "${metallb_dir}"/helm/values.yaml
+fi
 
-# adguard
-echo -e "\nDeploying adguard..."
-adguard_dir="${project_path}/adguard"
-
-# Replace env variables
-envsubst <"${adguard_dir}"/05-ingress-route.yaml | sponge "${adguard_dir}"/05-ingress-route.yaml
-
-#kubectl apply -f "${adguard_dir}" --dry-run="${dry_run_mode}"
+kubectl apply -f "${metallb_dir}" --dry-run="${dry_run_mode}"
 echo -e "Done!\n"
