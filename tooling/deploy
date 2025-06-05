@@ -89,5 +89,8 @@ else
     helm upgrade --install metallb metallb/metallb --namespace network --values "${metallb_dir}"/helm/values.yaml
 fi
 
+# Wait for metallb to be ready
+kubectl wait --namespace network --for=condition=ready pod -l app=metallb-controller --timeout=60s
+
 kubectl apply -f "${metallb_dir}" --dry-run="${dry_run_mode}"
 echo -e "Done!\n"
