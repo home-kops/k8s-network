@@ -1,5 +1,5 @@
 tolerations:
-- key: "tier"
+- key: "role"
   operator: "Equal"
   value: "cp"
   effect: "NoSchedule"
