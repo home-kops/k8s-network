@@ -90,7 +90,7 @@ else
 fi
 
 # Wait for metallb to be ready
-kubectl wait --namespace network --for=condition=ready pod -l app=metallb --timeout=60s
+kubectl -n network wait --for=condition=available --timeout=60s deployment/metallb-controller
 
 kubectl apply -f "${metallb_dir}" --dry-run="${dry_run_mode}"
 echo -e "Done!\n"
