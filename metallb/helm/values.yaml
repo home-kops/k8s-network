@@ -1,5 +1,13 @@
-tolerations:
-- key: "role"
-  operator: "Equal"
-  value: "cp"
-  effect: "NoSchedule"
+controller:
+  tolerations:
+  - key: "role"
+    operator: "Equal"
+    value: "cp"
+    effect: "NoSchedule"
+
+speaker:
+  tolerations:
+  - key: "role"
+    operator: "Equal"
+    value: "cp"
+    effect: "NoSchedule"
