@@ -4,20 +4,23 @@ tolerations:
   value: "cp"
   effect: "NoSchedule"
 
-webhook.tolerations:
-- key: "role"
-  operator: "Equal"
-  value: "cp"
-  effect: "NoSchedule"
+webhook:
+  tolerations:
+  - key: "role"
+    operator: "Equal"
+    value: "cp"
+    effect: "NoSchedule"
 
-cainjector.tolerations:
-- key: "role"
-  operator: "Equal"
-  value: "cp"
-  effect: "NoSchedule"
+cainjector:
+  tolerations:
+  - key: "role"
+    operator: "Equal"
+    value: "cp"
+    effect: "NoSchedule"
 
-startupapicheck.tolerations:
-- key: "role"
-  operator: "Equal"
-  value: "cp"
-  effect: "NoSchedule"
+startupapicheck:
+  tolerations:
+  - key: "role"
+    operator: "Equal"
+    value: "cp"
+    effect: "NoSchedule"
