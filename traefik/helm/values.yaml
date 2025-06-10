@@ -38,6 +38,9 @@ ports:
     exposedPort: 9090
     protocol: TCP
 
+nodeSelector:
+  role: cp
+
 tolerations:
 - key: "role"
   operator: "Equal"

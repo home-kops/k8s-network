@@ -1,4 +1,6 @@
 controller:
+  nodeSelector:
+    role: cp
   tolerations:
   - key: "role"
     operator: "Equal"
@@ -6,6 +8,8 @@ controller:
     effect: "NoSchedule"
 
 speaker:
+  nodeSelector:
+    role: cp
   tolerations:
   - key: "role"
     operator: "Equal"
