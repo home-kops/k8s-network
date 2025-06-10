@@ -15,4 +15,4 @@ metadata:
 spec:
   nodeSelectors:
   - matchLabels:
-      node-role.kubernetes.io/cp: ""
+      role: cp
