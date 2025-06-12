@@ -1,3 +1,10 @@
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 250m
+    memory: 256Mi
 logs:
   general:
     format: json
@@ -12,18 +19,15 @@ logs:
         names:
           "User-Agent": "keep"
           "Content-Type": "keep"
-
 deployment:
   additionalVolumes:
   - name: traefik-logs
     hostPath:
       path: /var/log/traefik/
       type: Directory
-
 additionalVolumeMounts:
 - name: traefik-logs
   mountPath: /var/log/traefik
-
 ports:
   loki:
     port: 3100        
@@ -37,7 +41,6 @@ ports:
       default: true
     exposedPort: 9090
     protocol: TCP
-
 nodeSelector:
   role: cp
 tolerations:

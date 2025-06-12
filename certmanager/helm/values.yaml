@@ -1,3 +1,10 @@
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 200m
+    memory: 256Mi
 nodeSelector:
   role: cp
 tolerations:
@@ -7,6 +14,13 @@ tolerations:
   effect: "NoSchedule"
 
 webhook:
+  resources:
+    requests:
+      cpu: 50m
+      memory: 64Mi
+    limits:
+      cpu: 100m
+      memory: 128Mi
   nodeSelector:
     role: cp
   tolerations:
@@ -16,6 +30,13 @@ webhook:
     effect: "NoSchedule"
 
 cainjector:
+  resources:
+    requests:
+      cpu: 50m
+      memory: 64Mi
+    limits:
+      cpu: 100m
+      memory: 128Mi
   nodeSelector:
     role: cp
   tolerations:
@@ -25,6 +46,13 @@ cainjector:
     effect: "NoSchedule"
 
 startupapicheck:
+  resources:
+    requests:
+      cpu: 50m
+      memory: 64Mi
+    limits:
+      cpu: 100m
+      memory: 128Mi
   nodeSelector:
     role: cp
   tolerations:
