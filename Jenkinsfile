@@ -26,21 +26,5 @@ pipeline {
         }
       }
     }
-
-    stage('Deploy') {
-      when {
-        branch 'main'
-      }
-      steps {
-        withCredentials(
-          [
-            string(credentialsId: 'server1-domain', variable: 'DOMAIN'),
-            string(credentialsId: 'lets-encrypt-email', variable: 'LETS_ENCRYPT_EMAIL')
-          ]
-        ) {
-          sh './tooling/deploy'
-        }
-      }
-    }
   }
 }
