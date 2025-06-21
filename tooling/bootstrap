@@ -18,9 +18,9 @@ echo -e "\nDeploying traefik..."
 traefik_dir="${project_path}/traefik"
 
 # Replace env variables
-envsubst <"${traefik_dir}"/01-ingress-route.yaml | sponge "${traefik_dir}"/01-ingress-route.yaml
+sed -i "s|<path:secret/data/infra#domain>|${DOMAIN}|" "${traefik_dir}"/values.yaml
 
-kubectl kustomize "${traefik_dir}" --enable-helm | kubectl apply -f -
+helm upgrade --install --namespace network --create-namespace -f "${traefik_dir}"/values.yaml traefik "${traefik_dir}"
 
 # cert-manager
 echo -e "\nDeploying cert-manager..."
