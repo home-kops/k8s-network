@@ -20,7 +20,6 @@ traefik_dir="${project_path}/traefik"
 # Replace env variables
 sed -i "s|<path:secret/data/infra#domain>|${DOMAIN}|" "${traefik_dir}"/values.yaml
 
-
 helm dependency build "${traefik_dir}"
 helm upgrade --install --namespace network --create-namespace -f "${traefik_dir}"/values.yaml traefik "${traefik_dir}"
 
