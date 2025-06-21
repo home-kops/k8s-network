@@ -24,6 +24,9 @@ helm dependency build "${traefik_dir}"
 helm upgrade --install --namespace network --create-namespace -f "${traefik_dir}"/values.yaml traefik "${traefik_dir}"
 
 # cert-manager
+
+kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.18.1/cert-manager.crds.yaml
+
 echo -e "\nDeploying cert-manager..."
 certmanager_dir="${project_path}/certmanager"
 
