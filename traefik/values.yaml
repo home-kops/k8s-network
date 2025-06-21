@@ -49,8 +49,5 @@ traefik:
     operator: "Equal"
     value: "cp"
     effect: "NoSchedule"
-  ingressRoute:
-    dashboard:
-      enabled: true
 
 domain: <path:secret/data/infra#domain>
