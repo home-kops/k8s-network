@@ -1,0 +1,53 @@
+traefik:
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 250m
+      memory: 256Mi
+  logs:
+    general:
+      format: json
+      filePath: "/var/log/traefik/traefik.log"
+    access:
+      enabled: true
+      format: json
+      filePath: "/var/log/traefik/access.log"
+      fields:
+        headers:
+          defaultMode: drop
+          names:
+            "User-Agent": "keep"
+            "Content-Type": "keep"
+  deployment:
+    additionalVolumes:
+    - name: traefik-logs
+      hostPath:
+        path: /var/log/traefik/
+        type: Directory
+  additionalVolumeMounts:
+  - name: traefik-logs
+    mountPath: /var/log/traefik
+  ports:
+    loki:
+      port: 3100        
+      expose:
+        default: true
+      exposedPort: 3100
+      protocol: TCP
+    prometheus:
+      port: 9090        
+      expose:
+        default: true
+      exposedPort: 9090
+      protocol: TCP
+  nodeSelector:
+    role: cp
+  tolerations:
+  - key: "role"
+    operator: "Equal"
+    value: "cp"
+    effect: "NoSchedule"
+
+domain: <path:secret/data/infra#domain>
