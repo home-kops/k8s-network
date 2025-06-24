@@ -16,9 +16,16 @@ pipeline {
     stage('Verify') {
       steps {
         sh 'helm lint ./certmanager'
+        sh 'helm dependency build ./certmanager/'
+        sh 'helm template ./certmanager -f ./certmanager/values.yaml'
+
         sh '/usr/local/bin/kubectl kustomize ./metallb --enable-helm'
-        sh 'helm lint ./replicator'
+
+        sh 'helm template kubernetes-replicator mittwald/kubernetes-replicator -f ./replicator/values.yaml'
+
         sh 'helm lint ./traefik'
+        sh 'helm dependency build ./traefik/'
+        sh 'helm template ./traefik -f ./traefik/values.yaml'
       }
     }
   }
