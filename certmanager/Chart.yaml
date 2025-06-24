@@ -3,7 +3,6 @@ name: cert-manager
 description: Mod chart for cert-manager with AVP support
 type: application
 version: 0.1.0
-appVersion: "v1.18.0"
 
 dependencies:
 - name: cert-manager

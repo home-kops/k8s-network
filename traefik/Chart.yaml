@@ -3,7 +3,6 @@ name: traefik
 description: Mod chart for traefik with AVP support
 type: application
 version: 0.1.0
-appVersion: 36.2.0-rc1
 
 dependencies:
 - name: traefik
