@@ -16,17 +16,25 @@ pipeline {
     stage('Verify') {
       steps {
         container('jnlp') {
-          sh 'helm lint ./certmanager'
-          sh 'helm dependency build ./certmanager/'
-          sh 'helm template ./certmanager -f ./certmanager/values.yaml'
+          sh '''
+            helm lint ./certmanager && \
+              helm dependency build ./certmanager && \
+              helm template ./certmanager -f ./certmanager/values.yaml
+          '''
 
           sh 'kubectl kustomize ./metallb --enable-helm'
 
-          sh 'helm template kubernetes-replicator mittwald/kubernetes-replicator -f ./replicator/values.yaml'
+          sh '''
+            helm repo add mittwald https://helm.mittwald.de && \
+              helm repo update && \
+              helm template kubernetes-replicator mittwald/kubernetes-replicator -f ./replicator/values.yaml
+          '''
 
-          sh 'helm lint ./traefik'
-          sh 'helm dependency build ./traefik/'
-          sh 'helm template ./traefik -f ./traefik/values.yaml'
+          sh '''
+            helm lint ./traefik && \
+              helm dependency build ./traefik && \
+              helm template ./traefik -f ./traefik/values.yaml
+          '''
         }
       }
     }
