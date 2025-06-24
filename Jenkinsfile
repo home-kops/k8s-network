@@ -15,14 +15,26 @@ pipeline {
 
     stage('Verify') {
       steps {
-        withCredentials(
-          [
-            string(credentialsId: 'server1-domain', variable: 'DOMAIN'),
-            string(credentialsId: 'lets-encrypt-email', variable: 'LETS_ENCRYPT_EMAIL')
-          ]
-        ) {
-          // Run the deploy script dry-run mode to validate the resources
-          sh './tooling/deploy -d'
+        container('jnlp') {
+          sh '''
+            helm lint ./certmanager && \
+              helm dependency build ./certmanager && \
+              helm template ./certmanager -f ./certmanager/values.yaml
+          '''
+
+          sh 'kubectl kustomize ./metallb --enable-helm'
+
+          sh '''
+            helm repo add mittwald https://helm.mittwald.de && \
+              helm repo update && \
+              helm template kubernetes-replicator mittwald/kubernetes-replicator -f ./replicator/values.yaml
+          '''
+
+          sh '''
+            helm lint ./traefik && \
+              helm dependency build ./traefik && \
+              helm template ./traefik -f ./traefik/values.yaml
+          '''
         }
       }
     }
