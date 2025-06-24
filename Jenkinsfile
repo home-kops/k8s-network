@@ -15,15 +15,10 @@ pipeline {
 
     stage('Verify') {
       steps {
-        withCredentials(
-          [
-            string(credentialsId: 'server1-domain', variable: 'DOMAIN'),
-            string(credentialsId: 'lets-encrypt-email', variable: 'LETS_ENCRYPT_EMAIL')
-          ]
-        ) {
-          // Run the deploy script dry-run mode to validate the resources
-          sh './tooling/deploy -d'
-        }
+        sh 'helm lint ./certmanager'
+        sh '/usr/local/bin/kubectl kustomize ./metallb --enable-helm'
+        sh 'helm lint ./replicator'
+        sh 'helm lint ./traefik'
       }
     }
   }
