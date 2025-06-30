@@ -49,19 +49,10 @@ traefik:
     operator: "Equal"
     value: "cp"
     effect: "NoSchedule"
-  #providers:
-  #  kubernetesCRD:
-  #    allowCrossNamespace: true
-  #experimental:
-  #  plugins:
-  #    bouncer:
-  #      moduleName: github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin
-  #      version: v1.4.2
-  #additionalArguments:
-  #- "--experimental.plugins.bouncer.moduleName=github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin"
-  #- "--experimental.plugins.bouncer.version=v1.4.2"
-  #- "--entrypoints.web.http.middlewares=traefik-bouncer@kubernetescrd"
-  #- "--entrypoints.websecure.http.middlewares=traefik-bouncer@kubernetescrd"
-  #- "--providers.kubernetescrd"
+  experimental:
+    plugins:
+      bouncer:
+        moduleName: github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin
+        version: v1.4.2
 
 domain: <path:secret/data/infra#domain>
