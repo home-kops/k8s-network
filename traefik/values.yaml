@@ -53,8 +53,8 @@ traefik:
     kubernetesCRD:
       allowCrossNamespace: true
   experimental:
-  plugins:
-    enabled: true
+    plugins:
+      enabled: true
   additionalArguments:
   - "--experimental.plugins.bouncer.moduleName=github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin"
   - "--experimental.plugins.bouncer.version=v1.4.2"
