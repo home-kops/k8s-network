@@ -13,5 +13,6 @@ spec:
       enabled: true
       crowdsecMode: stream
       crowdsecLapiScheme: https
+      crowdsecLapiTLSInsecureVerify: true
       crowdsecLapiHost: crowdsec-service.monitoring:8080
       crowdsecLapiKey: {{ .Values.bouncer.lapiKey }}
