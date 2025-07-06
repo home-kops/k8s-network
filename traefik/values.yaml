@@ -49,14 +49,12 @@ traefik:
     operator: "Equal"
     value: "cp"
     effect: "NoSchedule"
-  experimental:
-    plugins:
-      bouncer:
-        moduleName: github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin
-        version: v1.4.2
-#  additionalArguments:
-#  - "--entrypoints.web.http.middlewares=network-bouncer@kubernetescrd"
-#  - "--entrypoints.websecure.http.middlewares=network-bouncer@kubernetescrd"
+  additionalArguments:
+  - "--experimental.plugins.bouncer.moduleName=github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin"
+  - "--experimental.plugins.bouncer.version=v1.4.2"
+  - "--entrypoints.web.http.middlewares=network-bouncer@kubernetescrd"
+  - "--entrypoints.websecure.http.middlewares=network-bouncer@kubernetescrd"
+  - "--providers.kubernetescrd"
 
 domain: <path:secret/data/infra#domain>
 bouncer:
