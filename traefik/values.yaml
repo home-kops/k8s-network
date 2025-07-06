@@ -12,7 +12,6 @@ traefik:
       filePath: "/var/log/traefik/traefik.log"
     access:
       enabled: true
-      filePath: "/var/log/traefik/access.log"
   deployment:
     additionalVolumes:
     - name: traefik-logs
