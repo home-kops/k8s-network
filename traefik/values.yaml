@@ -56,3 +56,5 @@ traefik:
         version: v1.4.2
 
 domain: <path:secret/data/infra#domain>
+bouncer:
+  lapiKey: <path:secret/data/monitoring/crowdsec#traefik_bouncer_key>
