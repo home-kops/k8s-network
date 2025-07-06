@@ -12,14 +12,6 @@ traefik:
       filePath: "/var/log/traefik/traefik.log"
     access:
       enabled: true
-      format: json
-      filePath: "/var/log/traefik/access.log"
-      fields:
-        headers:
-          defaultMode: drop
-          names:
-            "User-Agent": "keep"
-            "Content-Type": "keep"
   deployment:
     additionalVolumes:
     - name: traefik-logs
