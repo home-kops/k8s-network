@@ -32,10 +32,10 @@ traefik:
   ports:
     web:
       middlewares:
-      - network-bouncer@kubernetescrd
+      - network-crowdsec@kubernetescrd
     websecure:
       middlewares:
-      - network-bouncer@kubernetescrd
+      - network-crowdsec@kubernetescrd
     loki:
       port: 3100        
       expose:
