@@ -55,8 +55,8 @@ traefik:
         moduleName: github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin
         version: v1.4.2
   additionalArguments:
-  - "--entrypoints.web.http.middlewares=network-bouncer@kubernetescrd"
-  - "--entrypoints.websecure.http.middlewares=network-bouncer@kubernetescrd"
+  - "--entrypoints.web.http.middlewares=bouncer@kubernetescrd"
+  - "--entrypoints.websecure.http.middlewares=bouncer@kubernetescrd"
   - "--providers.kubernetescrd"
 
 domain: <path:secret/data/infra#domain>
