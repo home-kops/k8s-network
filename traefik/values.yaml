@@ -30,12 +30,12 @@ traefik:
   - name: traefik-logs
     mountPath: /var/log/traefik
   ports:
-    web:
-      middlewares:
-      - network-crowdsec@kubernetescrd
-    websecure:
-      middlewares:
-      - network-crowdsec@kubernetescrd
+    # web:
+    #   middlewares:
+    #   - network-crowdsec@kubernetescrd
+    # websecure:
+    #   middlewares:
+    #   - network-crowdsec@kubernetescrd
     loki:
       port: 3100        
       expose:
