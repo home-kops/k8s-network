@@ -1,7 +1,7 @@
 apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:
-  name: bouncer
+  name: crowdsec-bouncer
   labels:
     app.kubernetes.io/managed-by: Helm
   annotations:
