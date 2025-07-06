@@ -30,6 +30,12 @@ traefik:
   - name: traefik-logs
     mountPath: /var/log/traefik
   ports:
+    web:
+      middlewares:
+      - network-bouncer@kubernetescrd
+    websecure:
+      middlewares:
+      - network-bouncer@kubernetescrd
     loki:
       port: 3100        
       expose:
@@ -54,9 +60,6 @@ traefik:
       bouncer:
         moduleName: github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin
         version: v1.4.2
-  additionalArguments:
-  - "--entrypoints.web.http.middlewares=network-bouncer@kubernetescrd"
-  - "--entrypoints.websecure.http.middlewares=network-bouncer@kubernetescrd"
 
 domain: <path:secret/data/infra#domain>
 bouncer:
