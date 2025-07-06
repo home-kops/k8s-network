@@ -49,6 +49,9 @@ traefik:
     operator: "Equal"
     value: "cp"
     effect: "NoSchedule"
+  experimental:
+    plugins:
+      enabled: true    
   additionalArguments:
   - "--experimental.plugins.bouncer.moduleName=github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin"
   - "--experimental.plugins.bouncer.version=v1.4.2"
