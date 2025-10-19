@@ -5,6 +5,6 @@ helmGlobals:
   chartHome: ../
 
 helmCharts:
-- name: certmanager
+- name: cert-manager
   namespace: network
   valuesFile: values.yaml
