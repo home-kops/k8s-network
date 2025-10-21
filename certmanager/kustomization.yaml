@@ -5,6 +5,12 @@ helmGlobals:
   chartHome: ../
 
 helmCharts:
+- name: cert-manager
+  repo: https://charts.jetstack.io
+  version: v1.18.2
+  releaseName: cert-manager
+  namespace: network
+  valuesFile: cert-manager-values.yaml
 - name: certmanager
   namespace: network
   valuesFile: values.yaml
