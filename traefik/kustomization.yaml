@@ -6,5 +6,11 @@ helmGlobals:
 
 helmCharts:
 - name: traefik
+  repo: "https://traefik.github.io/charts"
+  version: 37.1.1
+  releaseName: traefik
+  namespace: network
+  valuesFile: traefik-values.yaml
+- name: traefik
   namespace: network
   valuesFile: values.yaml
