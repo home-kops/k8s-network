@@ -14,9 +14,9 @@ logs:
 deployment:
   additionalVolumes:
   - name: traefik-logs
-    hostPath:
-      path: /var/log/traefik/
-      type: Directory
+    nfs:
+      server: <path:secret/data/infra#nfs>
+      path: /volume1/kubernetes/logs/traefik
 additionalVolumeMounts:
 - name: traefik-logs
   mountPath: /var/log/traefik
