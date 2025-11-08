@@ -12,6 +12,7 @@ logs:
   access:
     enabled: true
 podSecurityContext:
+  runAsUser: 1000
   runAsGroup: 1000
 deployment:
   additionalVolumes:
