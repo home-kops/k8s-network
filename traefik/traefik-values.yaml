@@ -11,8 +11,8 @@ logs:
     filePath: "/var/log/traefik/traefik.log"
   access:
     enabled: true
-securityContext:
-  fsGroup: 1000
+podSecurityContext:
+  runAsGroup: 1000
 deployment:
   additionalVolumes:
   - name: traefik-logs
